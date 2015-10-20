@@ -1,0 +1,17 @@
+﻿Build started 19 - 01:January-2012 11:50:07 PM.
+     1>Project "C:\Users\Robert\Desktop\CME Proiect Laborator\Alexandroaie George ~ tester\Functii\svnViewDiff\svnViewDiff\svnViewDiff.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\svnViewDiff.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+         svnViewDiff.vcxproj -> C:\Users\Robert\Desktop\CME Proiect Laborator\Alexandroaie George ~ tester\Functii\svnViewDiff\Debug\svnViewDiff.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\svnViewDiff.unsuccessfulbuild".
+         Touching "Debug\svnViewDiff.lastbuildstate".
+     1>Done Building Project "C:\Users\Robert\Desktop\CME Proiect Laborator\Alexandroaie George ~ tester\Functii\svnViewDiff\svnViewDiff\svnViewDiff.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.12

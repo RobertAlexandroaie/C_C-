@@ -1,0 +1,7 @@
+NumeRepo:CitateWoodyAllen;DataCreat:12 Nov 2011;Detinator:Ioana;Descriere:Citate ale faimosului regizor Woody Allen
+1;Ioana;12 Nov 2011;Woody Allen;What if everything is an illusion and nothing exists? In that case, I definitely overpaid for my carpet.
+2;Mihai;12 Nov 2011;Woody Allen;The lion and the calf shall lie down together but the calf won't get much sleep
+3;Mihai;13 Nov 2011;Woody Allen;Eighty percent of success is showing up
+4;Cristi;23 Nov 2011;Woody Allen;It is impossible to travel faster than the speed of light, and certainly not desirable, as one's hat keeps blowing off
+5;Ioana;25 Nov 2011;Woody Allen;I had a terrible education. I attended a school for emotionally disturbed teachers. 
+6;Cristi;23 Nov 2011;Woody Allen;I will not eat oysters. I want my food dead. Not sick. Not wounded. Dead. 

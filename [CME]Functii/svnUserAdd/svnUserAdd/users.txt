@@ -1,0 +1,5 @@
+1;Ioana; Grigoras; Ioana
+2;Mihai; Popescu; Mihai
+3;Cristi; Ionescu; Cristian
+4;altceva;gheorghe;ceva
+5;nickname;Nume;Prenume

@@ -1,0 +1,170 @@
+---- #####################
+---- start drop constrains
+
+-- /// start customer constrains
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_CUSTOMER_NAME]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[CUSTOMER] DROP CONSTRAINT [DF_CUSTOMER_NAME]
+END
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_CUSTOMER_ADRESA]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[CUSTOMER] DROP CONSTRAINT [DF_CUSTOMER_ADRESA]
+END
+GO
+-- /// end customer constrains
+
+-- /// start order constrains
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_ORDER]') AND parent_object_id = OBJECT_ID(N'[dbo].[ORDER]'))
+ALTER TABLE [dbo].[ORDER] DROP CONSTRAINT [FK_ORDER]
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_ORDER_DATA]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[ORDER] DROP CONSTRAINT [DF_ORDER_DATA]
+END
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_ORDER_VALOARE]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[ORDER] DROP CONSTRAINT [DF_ORDER_VALOARE]
+END
+GO
+-- /// end order constrains
+
+-- /// start orderdetails constrains
+IF  EXISTS (SELECT * FROM sys.foreign_keys WHERE object_id = OBJECT_ID(N'[dbo].[FK_ORDERDETAILS]') AND parent_object_id = OBJECT_ID(N'[dbo].[ORDERDETAILS]'))
+ALTER TABLE [dbo].[ORDERDETAILS] DROP CONSTRAINT [FK_ORDERDETAILS]
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_ORDERDETAILS_PRODUS]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[ORDERDETAILS] DROP CONSTRAINT [DF_ORDERDETAILS_PRODUS]
+END
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_ORDERDETAILS_VALOARE]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[ORDERDETAILS] DROP CONSTRAINT [DF_ORDERDETAILS_VALOARE]
+END
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'[DF_ORDERDETAILS_SERIAL]') AND type = 'D')
+BEGIN
+ALTER TABLE [dbo].[ORDERDETAILS] DROP CONSTRAINT [DF_ORDERDETAILS_SERIAL]
+END
+GO
+-- /// end orderdetails constrains
+
+---- end drop constrains
+---- ###################
+
+---- #################
+---- start drop tables
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CUSTOMER]') AND type in (N'U'))
+DROP TABLE [dbo].[CUSTOMER]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ORDER]') AND type in (N'U'))
+DROP TABLE [dbo].[ORDER]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ORDERDETAILS]') AND type in (N'U'))
+DROP TABLE [dbo].[ORDERDETAILS]
+GO
+
+---- end drop tables
+---- ###############
+
+---- ###################
+---- start create tables
+
+CREATE TABLE [dbo].[CUSTOMER](
+	[CUSTOMERID] [smallint] IDENTITY(1,1) NOT NULL,
+	[NAME] [char](20) NOT NULL,
+	[ADRESA] [char](30) NULL,
+ CONSTRAINT [PK_CUSTOMER] PRIMARY KEY CLUSTERED 
+(
+	[CUSTOMERID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[ORDER](
+	[ORDERID] [smallint] IDENTITY(1,1) NOT NULL,
+	[DATA] [date] NOT NULL,
+	[CUSTOMERID] [smallint] NOT NULL,
+	[VALOARE] [decimal](12, 2) NOT NULL,
+ CONSTRAINT [PK_ORDER] PRIMARY KEY CLUSTERED 
+(
+	[ORDERID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE TABLE [dbo].[ORDERDETAILS](
+	[ORDERID] [smallint] NOT NULL,
+	[PRODUS] [char](20) NOT NULL,
+	[VALOARE] [decimal](12, 2) NOT NULL,
+	[SERIAL] [smallint] NOT NULL,
+ CONSTRAINT [PK_ORDERDETAILS] PRIMARY KEY CLUSTERED 
+(
+	[ORDERID] ASC,
+	[SERIAL] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+---- end create tables
+---- #################
+
+---- #######################
+---- start create constrains
+
+-- /// start customer constrains
+ALTER TABLE [dbo].[CUSTOMER] ADD  CONSTRAINT [DF_CUSTOMER_NAME]  DEFAULT ('[n/a]') FOR [NAME]
+GO
+
+ALTER TABLE [dbo].[CUSTOMER] ADD  CONSTRAINT [DF_CUSTOMER_ADRESA]  DEFAULT ('[n/a]') FOR [ADRESA]
+GO
+-- /// end customer constrains
+
+-- /// start order constrains
+ALTER TABLE [dbo].[ORDER]  WITH CHECK ADD  CONSTRAINT [FK_ORDER] FOREIGN KEY([CUSTOMERID])
+REFERENCES [dbo].[CUSTOMER] ([CUSTOMERID])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[ORDER] CHECK CONSTRAINT [FK_ORDER]
+GO
+
+ALTER TABLE [dbo].[ORDER] ADD  CONSTRAINT [DF_ORDER_DATA]  DEFAULT (getdate()) FOR [DATA]
+GO
+
+ALTER TABLE [dbo].[ORDER] ADD  CONSTRAINT [DF_ORDER_VALOARE]  DEFAULT ((0.0)) FOR [VALOARE]
+GO
+-- /// end order constrains
+
+-- /// start orderdetails constrains
+ALTER TABLE [dbo].[ORDERDETAILS]  WITH CHECK ADD  CONSTRAINT [FK_ORDERDETAILS] FOREIGN KEY([ORDERID])
+REFERENCES [dbo].[ORDER] ([ORDERID])
+ON DELETE CASCADE
+GO
+
+ALTER TABLE [dbo].[ORDERDETAILS] CHECK CONSTRAINT [FK_ORDERDETAILS]
+GO
+
+ALTER TABLE [dbo].[ORDERDETAILS] ADD  CONSTRAINT [DF_ORDERDETAILS_PRODUS]  DEFAULT ('[n/a]') FOR [PRODUS]
+GO
+
+ALTER TABLE [dbo].[ORDERDETAILS] ADD  CONSTRAINT [DF_ORDERDETAILS_VALOARE]  DEFAULT ((0.0)) FOR [VALOARE]
+GO
+
+ALTER TABLE [dbo].[ORDERDETAILS] ADD  CONSTRAINT [DF_ORDERDETAILS_SERIAL]  DEFAULT ((0)) FOR [SERIAL]
+GO
+-- /// end orderdetails constrains
+
+---- end create constrains
+---- #####################

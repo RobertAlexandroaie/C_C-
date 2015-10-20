@@ -1,0 +1,7 @@
+Numepr1|Prenumepr1|0756282282
+a|Numeaq1|Prenumeaq1|0731111110|Somer
+a|Numeaq3|Prenumeaq3|0756282049|Profesieaq3
+c|Numecol2|Prenumecol2|0745829345|Clasacol2
+c|Numecol1|Prenumecol1|0732123234|Clasacol1
+f|Numeprt1|Prenumeprt1|0766633666|10/9/3000
+f|Numeprt2|Prenumeprt2|0757890987|2/2/2012
